@@ -8,7 +8,7 @@ fun main(){
     val token = StringTokenizer(br.readLine())
     val n = token.nextToken().toInt()
     val k = token.nextToken().toInt()
-    val d = Array<Int>(200000){
+    val d = Array<Int>(2*maxOf(n,k,10)){
         -1
     }
     val MAX = 2*k
