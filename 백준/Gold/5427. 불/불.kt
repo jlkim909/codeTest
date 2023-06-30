@@ -51,52 +51,31 @@ fun main(){
             val th = p.second
             val tw = p.third
             val time = map[th][tw]
-            if(ts == '*') {
-                // 아래
-                if (th > 0 && map[th - 1][tw] == -2) {
-                    map[th - 1][tw] = -1
-                    q.add(Triple('*',th - 1, tw))
-                }
-                // 위
-                if (th + 1 < h && map[th + 1][tw] == -2) {
-                    map[th + 1][tw] = -1
-                    q.add(Triple('*',th + 1, tw))
-                }
-                // 좌
-                if (tw > 0 && map[th][tw - 1] == -2) {
-                    map[th][tw - 1] = -1
-                    q.add(Triple('*',th, tw - 1))
-                }
-                // 우
-                if (tw + 1 < w && map[th][tw + 1] == -2) {
-                    map[th][tw + 1] = -1
-                    q.add(Triple('*',th, tw + 1))
-                }
-            }else{
-                if(th == 0 || th == h-1 || tw == 0 || tw == w - 1){
+            if(ts == '@') {
+                if (th == 0 || th == h - 1 || tw == 0 || tw == w - 1) {
                     result = time
                     break
                 }
-                // 아래
-                if (th > 0 && map[th - 1][tw] == -2) {
-                    map[th - 1][tw] = time + 1
-                    q.add(Triple('@',th - 1, tw))
-                }
-                // 위
-                if (th + 1 < h && map[th + 1][tw] == -2) {
-                    map[th + 1][tw] = time + 1
-                    q.add(Triple('@',th + 1, tw))
-                }
-                // 좌
-                if (tw > 0 && map[th][tw - 1] == -2) {
-                    map[th][tw - 1] = time + 1
-                    q.add(Triple('@',th, tw - 1))
-                }
-                // 우
-                if (tw + 1 < w && map[th][tw + 1] == -2) {
-                    map[th][tw + 1] = time + 1
-                    q.add(Triple('@',th, tw + 1))
-                }
+            }
+            // 아래
+            if (th > 0 && map[th - 1][tw] == -2) {
+                map[th - 1][tw] = time + 1
+                q.add(Triple(ts,th - 1, tw))
+            }
+            // 위
+            if (th + 1 < h && map[th + 1][tw] == -2) {
+                map[th + 1][tw] = time + 1
+                q.add(Triple(ts,th + 1, tw))
+            }
+            // 좌
+            if (tw > 0 && map[th][tw - 1] == -2) {
+                map[th][tw - 1] = time + 1
+                q.add(Triple(ts,th, tw - 1))
+            }
+            // 우
+            if (tw + 1 < w && map[th][tw + 1] == -2) {
+                map[th][tw + 1] = time + 1
+                q.add(Triple(ts,th, tw + 1))
             }
         }
 
