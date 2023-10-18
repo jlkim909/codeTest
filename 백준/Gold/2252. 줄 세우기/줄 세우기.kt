@@ -20,7 +20,6 @@ fun main(){
         val f = t1.nextToken().toInt()
         val s = t1.nextToken().toInt()
         g[f].add(s)
-        g[s].add(f)
         ind[s]++
     }
 
