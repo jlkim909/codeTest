@@ -1,21 +1,16 @@
 package All
 
 fun main() = with(System.`in`.bufferedReader()){
-    data class Drive(val p:Int, val d:Int)
     data class ShortCut(val end:Int, val d:Int)
-    val (n, end) = readLine().split(" ").map{it.toInt()}
-    val dq = ArrayDeque<Drive>()
+    val (n, d) = readLine().split(" ").map{it.toInt()}
     val shortCut = Array(10001){
         mutableListOf<ShortCut>()
     }
     repeat(n){
-        val (s, e, d) = readLine().split(" ").map{it.toInt()}
-        shortCut[e].add(ShortCut(s,d))
+        val (s, e, distance) = readLine().split(" ").map{it.toInt()}
+        shortCut[e].add(ShortCut(s,distance))
     }
 
-    val memo = IntArray(10_001){
-        -1
-    }
     fun drive(e:Int, d:Int):Int{
         if(e == 0){
             return d
@@ -28,8 +23,7 @@ fun main() = with(System.`in`.bufferedReader()){
         for((next, distance) in shortCut[e]){
             min = minOf(min,drive(next, d+distance))
         }
-        memo[d] = min
-        return memo[d]
+        return min
     }
-    print(drive(end, 0))
+    print(drive(d, 0))
 }
