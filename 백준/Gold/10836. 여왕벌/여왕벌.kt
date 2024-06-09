@@ -1,5 +1,8 @@
 package all
 
+import java.io.BufferedWriter
+import java.io.OutputStreamWriter
+
 fun main() = with(System.`in`.bufferedReader()) {
     val (m, n) = readLine().split(" ").map { it.toInt() }
     val bees = IntArray(2 * m - 1) { 1 }
@@ -31,10 +34,14 @@ fun main() = with(System.`in`.bufferedReader()) {
         }
     }
 
+    val bw = BufferedWriter(OutputStreamWriter(System.out))
     for(i in 0..<m){
         for(j in 0..<m){
-            print("${beesList[i][j]} ")
+            bw.write("${beesList[i][j]} ")
         }
-        println()
+        bw.write("\n")
     }
+
+    bw.flush()
+    bw.close()
 }
