@@ -3,10 +3,10 @@ package date_24_7
 fun main() = with(System.`in`.bufferedReader()){
     val (n, m) = readLine().split(" ").map{it.toInt()}
     val d = Array(n){
-        LongArray(10001)
+        IntArray(10001)
     }
 
-    val memory = readLine().split(" ").map{it.toLong()}
+    val memory = readLine().split(" ").map{it.toInt()}
     val cost = readLine().split(" ").map{it.toInt()}
 
     d[0][cost[0]] = memory[0]
