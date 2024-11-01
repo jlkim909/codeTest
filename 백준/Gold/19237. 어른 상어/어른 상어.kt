@@ -80,12 +80,6 @@ private class AdultSea(
         }
     }
 
-    fun printSharksInfo() {
-        sharks.forEach {
-            it.printSharkInfo()
-        }
-    }
-
     private inner class Shark(
         var y: Int,
         var x: Int,
@@ -98,61 +92,34 @@ private class AdultSea(
         private var dir = initDir
         var isOut = false
 
-        fun inMap(y: Int, x: Int): Boolean = y in 0..<mapSize && x in 0..<mapSize
-        fun move() {
-            for (nextDir in priorityDir[dir]) {
-                val ny = y + dy[nextDir]
-                val nx = x + dx[nextDir]
-                if (!inMap(ny, nx)) continue
-                if (smellMap[ny][nx].isExist) continue
-                map[y][x] = 0
-                if (map[ny][nx] != 0) {
-                    isOut = true
-                } else {
-                    map[ny][nx] = this.num
-                    y = ny
-                    x = nx
-                    dir = nextDir
-                }
-                return
-            }
-
-            for (nextDir in priorityDir[dir]) {
-                val ny = y + dy[nextDir]
-                val nx = x + dx[nextDir]
-                if (!inMap(ny, nx)) continue
-                if (map[ny][nx] != 0) continue
-                if (smellMap[ny][nx].sharkNum != this.num) continue
-                map[y][x] = 0
-                map[ny][nx] = this.num
-                y = ny
-                x = nx
-                dir = nextDir
-                return
+        private fun inMap(y: Int, x: Int): Boolean = y in 0..<mapSize && x in 0..<mapSize
+        private fun canMove(ny: Int, nx: Int, isBack: Boolean): Boolean {
+            if (!inMap(ny, nx)) return false
+            return if (isBack) {
+                smellMap[ny][nx].sharkNum == this.num
+            } else {
+                !smellMap[ny][nx].isExist
             }
         }
 
-        fun printSharkInfo() {
-            println("$num 번 상어, y: $y, x: $x dir: ${stringFormattingDir(dir)}")
-            println("우선 순위: ")
-            repeat(4) { i ->
-                print("${stringFormattingDir(i)} | ")
-                priorityDir[i].forEach {
-                    print("${stringFormattingDir(it)} ")
+        fun move(isBack: Boolean = false) {
+            for (nextDir in priorityDir[dir]) {
+                val ny = y + dy[nextDir]
+                val nx = x + dx[nextDir]
+                if (canMove(ny, nx, isBack)) {
+                    map[y][x] = 0
+                    if (map[ny][nx] != 0) {
+                        isOut = true
+                    } else {
+                        map[ny][nx] = this.num
+                        y = ny
+                        x = nx
+                        dir = nextDir
+                    }
+                    return
                 }
-                println()
             }
-            println()
-        }
-
-        private fun stringFormattingDir(dir: Int): String {
-            return when (dir) {
-                0 -> "↑"
-                1 -> "↓"
-                2 -> "←"
-                3 -> "→"
-                else -> "잘못된 입력"
-            }
+            move(true)
         }
     }
 
