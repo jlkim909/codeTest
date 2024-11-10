@@ -21,25 +21,11 @@ private fun getAllExpression(
         var number = 0
         var sum = 0
         var isPlus = true
-        for (c in str) {
+        str.forEach { c ->
             when (c) {
-                '+' -> {
-                    if (isPlus) {
-                        sum += number
-                    } else {
-                        sum -= number
-                    }
-                    isPlus = true
-                    number = 0
-                }
-
-                '-' -> {
-                    if (isPlus) {
-                        sum += number
-                    } else {
-                        sum -= number
-                    }
-                    isPlus = false
+                '+', '-' -> {
+                    sum += if (isPlus) number else -number
+                    isPlus = c == '+'
                     number = 0
                 }
 
@@ -52,12 +38,8 @@ private fun getAllExpression(
                 }
             }
         }
-        if (isPlus) {
-            sum += number
-        } else {
-            sum -= number
-        }
-        if(sum == 0){
+        sum += if (isPlus) number else -number
+        if (sum == 0) {
             bw.write("$str\n")
         }
         return
